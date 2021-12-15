@@ -1,0 +1,85 @@
+:root{
+    --global-backgound: #dfe6e9;
+    --header-background: #e17055;
+    --model-background: #fdcb6e;
+    --button-background: #e17055;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    background-color: var(--global-backgound);
+}
+
+header{
+    background-color: var(--header-background);
+    text-align: center;
+    box-shadow: 0 0 10px black;
+}
+
+header nav{
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+
+header ul{
+    display: inline-flex;
+    list-style-type: none;
+}
+
+header li{
+    margin: 10px;
+}
+
+.button{
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    box-sizing: border-box;
+    box-shadow: 0 0 200px;  
+    padding: 2%;
+    width: 50%;
+    text-align: center;
+    background-color: var(--button-background);
+
+}
+
+.wrapper{
+    margin: 20px;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    display: none;
+    text-align: center;
+}
+
+.model{
+    background-color: var(--model-background);
+    min-width: 100px;
+    min-height: 100px;
+    padding: 20px;
+    display: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.copy{
+    cursor: pointer; 
+}
+
+#close{
+    position: absolute;
+    cursor: pointer; 
+    top: 5%;
+    right: 5%;
+}
