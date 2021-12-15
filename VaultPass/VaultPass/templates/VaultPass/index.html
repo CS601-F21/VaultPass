@@ -15,13 +15,36 @@
             <div class="branding"><h1>VaultPass</h1></div>
             <ul>
                 <li><a href="">Home</a></li>
-                <li><a href="javascript:;" onclick="displayModel('login');">Login</a></li>
-                <li><a href="javascript:;" onclick="displayModel('signup');">SignUp</a></li>
-                <li><a href="javascript:;" onclick="displayModel('password');">Password</a></li>
-                <li><a href="javascript:;" onclick="displayModel('add-password');">Add Password</a></li>
+                {% if request.user.is_anonymous %}
+                    <li><a href="javascript:;" onclick="displayModel('login');">Login</a></li>
+                    <li><a href="javascript:;" onclick="displayModel('signup');">SignUp</a></li>
+                {% else %}
+                    <li><a href="javascript:;" onclick="displayModel('password');">Password</a></li>
+                    <li><a href="javascript:;" onclick="displayModel('add-password');">Add Password</a></li>
+                    <li><a href="javascript:;" onclick="document.getElementById('logout').click();">Logout</a></li>
+                    <form hidden="true" action="." method="POST">
+                        {% csrf_token %}
+                        <input type="submit" id="logout" name="logout">
+                    </form>
+                {% endif %}
             </ul>
         </nav>
     </header>
+
+    {% if messages %}
+        <div class="msgs" style="text-align: center;">
+            {% for msg in messages %}
+                <p>
+                    {% if msg.tags == "error" %}
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        {% else %}
+                        <i class="fa-solid fa-check"></i>
+                    {% endif %}
+                    &nbsp;{{msg}}
+                </p>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <div class="wrapper">
         <span id="close"><i class="fa-solid fa-xmark"></i></span>
@@ -37,12 +60,13 @@
 
         <!--signup-->
         <div class="model" id="signup">
-            <form action="">
+            <form action="" role="form" method="POST">
+                {% csrf_token %}
                 <h2>SignUp</h2><br><br>
                 <input type="text" name="username" placeholder="Username"><br><br>
                 <input type="email" name="email" placeholder="Email"><br><br>
                 <input type="text" name="password" placeholder="Password"><br><br>
-                <input type="submit" value="Sign up">
+                <input type="submit" value="Sign up" name="signup">
             </form>
         </div>
 
@@ -66,6 +90,7 @@
                 <input type="submit" value="Save">
             </form>
         </div>
+    </div>
 
         <div class="container">
             <div class="card">
@@ -93,6 +118,6 @@
                     Google
                 </div>   
             </div>
-        </div
+        </div>
 </body>
 </html>
