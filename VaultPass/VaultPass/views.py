@@ -32,8 +32,21 @@ def home(request):
         elif "logout" in request.POST:
             logout(request)
             msg = "Logged out"
-            messages.error(request, msg)
+            messages.success(request, msg)
             return HttpResponseRedirect(request.path)
+        elif "login" in request.POST:
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+            newLogin = authenticate(request, username=username, password=password)
+            if newLogin is None:
+                msg = "Login unsuccessful"
+                messages.error(request, msg)
+                return HttpResponseRedirect(request.path)
+            else:
+                login(request, newLogin)
+                msg = "Welcome {}".format(username)
+                messages.success(request, msg)
+                return HttpResponseRedirect(request.path)
             
 
                 
