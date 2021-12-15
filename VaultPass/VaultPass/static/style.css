@@ -1,0 +1,114 @@
+:root{
+    --global-backgound: #dfe6e9;
+    --header-background: #e17055;
+    --model-background: #fdcb6e;
+    --button-background: #e17055;
+    --header-button-background: #fab1a0;
+    --card-background: #fdcb6e;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html{
+    background-color: var(--global-backgound);
+}
+
+header{
+    background-color: var(--header-background);
+    text-align: center;
+    box-shadow: 0 0 10px #3b3f41;
+}
+
+header nav{
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 20px;
+}
+
+header ul{
+    display: inline-flex;
+    list-style-type: none;
+}
+
+header a{
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--global-text-color);
+    padding: 25px;
+    text-align: center;
+}
+
+header li{
+    margin: 20px;
+    padding: 10px;
+    background-color: var(--header-button-background);
+}
+
+.button{
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;
+    border-bottom-style: none;
+    box-sizing: border-box;
+    box-shadow: 0 0 200px;  
+    padding: 2%;
+    width: 50%;
+    text-align: center;
+    background-color: var(--button-background);
+
+}
+
+.wrapper{
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    display: none;
+    text-align: center;
+}
+
+.model{
+    background-color: var(--model-background);
+    min-width: 100px;
+    min-height: 100px;
+    padding: 50px;
+    display: none;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.container{
+    margin-top: 20px;
+    padding: 20px;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 80px;
+}
+
+.card{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--card-background);
+}
+
+.copy{
+    cursor: pointer;
+}
+
+#close{
+    position: absolute;
+    cursor: pointer; 
+    top: 5%;
+    right: 5%;
+}
