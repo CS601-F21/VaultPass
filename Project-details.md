@@ -2,6 +2,28 @@
 
 VaultPass is a local password manager.
 
+<br/>
+
+## Instructions
+
+### Clone the repository
+
+`git clone git@github.com:CS601-F21/side-project-anchitbhatia.git`
+
+### Install the requirements
+
+`pip install -r requirements.txt`
+
+### Run the Django server
+
+`python3 VaultPass/manage.py runserver PORT`
+
+Default Port is 8000
+
+<br/>
+
+## About
+
 ### Motivation:
 The motivation behind developing VaultPass is to have an easy to use password manager that is hosted locally. The existing cloud based 
 password managers are complicated and cluttered with so many multiple use cases. It gets difficult to store and manage passwords for people 
@@ -17,7 +39,6 @@ Also i wanted to learn Django since last few months and therefore decided to use
   * random password generator
   * view and delete passwords
   * set password hint
-  * admin user with admin priviledges
   * change master password
   * multiple user support
   
