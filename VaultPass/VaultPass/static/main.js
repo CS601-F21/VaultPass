@@ -23,6 +23,15 @@ btn.addEventListener("click", ()=>{
   document.getElementById("password").value=Math.random().toString(36).slice(-10);
 });
 
+function togglePwd() {
+    var x = document.getElementById("pwd");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+
 const copy = document.querySelectorAll(".copy");
 copy.forEach(c => {
     c.onclick = () => {

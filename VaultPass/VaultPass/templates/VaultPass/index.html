@@ -120,9 +120,10 @@
             {% endif %}
             <div class="name"><b>{{pwd.siteTitle}}</b></div><br>
             <input type="email" name="email" value="{{pwd.email}}"> <i class="fa-regular fa-copy copy" title="Copy email"></i><br><br>
-            <input type="password" name="password" value="{{pwd.password}}"> <i class="fa-regular fa-copy copy" title="Copy password"></i><br><br>   
+            <input type="password" name="password" id="pwd" value="{{pwd.password}}"> <i class="fa-regular fa-copy copy" title="Copy password"></i><br><br>   
             <input type="text" name="hint" value="{{pwd.hint}}"> <i class="fa-regular fa-lightbulb"></i><br><br>
-            <input type="text" hidden="true" name="password-id" value="{{pwd.id}}">
+            <input type="text" hidden="true" name="password-id" value="{{pwd.id}}"><br>
+            <input class="button" type="" id="toggle" onclick="togglePwd()" value="Toggle"><br><br>
             <input class="button" type="submit" value="Update" name="update_password"><br><br>
         </form>
         <form action="." method="POST">
