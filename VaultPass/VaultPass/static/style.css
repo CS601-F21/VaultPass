@@ -1,16 +1,21 @@
 :root{
-    --global-backgound: #dfe6e9;
-    --header-background: #e17055;
-    --model-background: #fdcb6e;
-    --button-background: #e17055;
+    --global-backgound: #0F172A;
+    --header-background: #334155;
+    --model-background: #475569 ;
+    --button-background: #fdcb6e;
+    --button-hover-background: #ffeaa7;
     --header-button-background: #fab1a0;
-    --card-background: #fdcb6e;
+    --card-background: #475569;
+    --dark-text-color: #131418;
+    --light-text-color: white
 }
 
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    color: var(--light-text-color);
+    font-family: 'Betinya Sans', sans-serif;                     
 }
 
 html{
@@ -20,7 +25,10 @@ html{
 header{
     background-color: var(--header-background);
     text-align: center;
-    box-shadow: 0 0 10px #3b3f41;
+}
+
+.branding{
+    font-size:xx-large;
 }
 
 header nav{
@@ -37,16 +45,21 @@ header ul{
 header a{
     text-decoration: none;
     cursor: pointer;
-    color: var(--global-text-color);
+    color: var(--dark-text-color);
     padding: 25px;
     text-align: center;
 }
 
 header li{
+    font-size:medium;
     margin: 20px;
     padding: 10px;
-    background-color: var(--header-button-background);
-    border: 1px solid #3b3f41;
+    color: var(--dark-text-color);
+    background-color: var(--button-background);
+}
+
+header li:hover{
+    background-color: var(--button-hover-background);
 }
 
 .button{
@@ -55,13 +68,28 @@ header li{
     border-left-style: none;
     border-bottom-style: none;
     box-sizing: border-box;
-    box-shadow: 0 0 200px;  
     padding: 2%;
-    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    width: 30%;
     text-align: center;
+    font-size: medium;
+    color: var(--dark-text-color);
     background-color: var(--button-background);
-
 }
+
+.button:hover{
+    background-color: var(--button-hover-background);
+}
+
+.card input,
+.model input{
+    color:var(--dark-text-color);
+    padding: 2px;
+    text-align: center;
+    font-size: medium;
+}
+
 
 .wrapper{
     width: 100%;
@@ -83,14 +111,15 @@ header li{
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    border-bottom: 4px solid #6EE7B7;
 }
 
 .container{
     margin-top: 20px;
-    padding: 20px;
+    padding: 30px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 30px;
     margin-bottom: 80px;
 }
 
@@ -98,11 +127,12 @@ header li{
     display: block;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    margin: 5px;;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin: 2px;
+    border-bottom: 4px solid #e17055;
     background-color: var(--card-background);
-    
+    font-size: large;
     text-align: center;
 }
 
@@ -116,4 +146,11 @@ header li{
     cursor: pointer; 
     top: 5%;
     right: 5%;
+}
+
+#add-password{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

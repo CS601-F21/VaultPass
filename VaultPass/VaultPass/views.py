@@ -14,8 +14,6 @@ fernet = Fernet(settings.FERNET_KEY)
 browser = Browser()
 browser.set_handle_robots(False)
 
-
-
 def home(request):
     if request.method == 'POST':
         if 'signup' in request.POST:
@@ -67,9 +65,13 @@ def home(request):
             pwdEncrypt = fernet.encrypt(pwd.encode())
             
             browser.open(url)
-            siteTitle = browser.title()
+            siteTitle = parseTitle(browser.title())
             try:
-                siteIcon = favicon.get(url)[1].url
+                icons = favicon.get(url)
+                if len(icons) > 1:
+                    siteIcon = icons[1].url
+                else:
+                    siteIcon = icons[0].url
             except:
                 siteIcon = None
             newPwd = Password.objects.create(
@@ -82,10 +84,17 @@ def home(request):
             msg = "Password saved"
             messages.success(request, msg)
             return HttpResponseRedirect(request.path)
+        
+        elif "delete" in request.POST:
+            deletePwd = request.POST.get("password-id")
+            msg = "Password deleted"
+            Password.objects.get(id=deletePwd).delete()
+            messages.success(request, msg)
+            return HttpResponseRedirect(request.path)
     
     if request.user.is_anonymous:
         return render(request, 'VaultPass/index.html')
-
+    
     pwds = Password.objects.all().filter(user=request.user)
     for pwd in pwds:
         pwd.email = fernet.decrypt(pwd.email.encode()).decode()
@@ -95,4 +104,6 @@ def home(request):
         "passwords":pwds,
     })
     
-    # return render(request, 'VaultPass/index.html')
+
+def parseTitle(title):
+    return title.split(':')[0]
