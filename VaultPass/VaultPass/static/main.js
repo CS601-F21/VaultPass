@@ -12,11 +12,16 @@ function displayModel(id){
     close.addEventListener("click", ()=>{
         wrapper.style.display = "none";
         model.style.display = "none";
-        document.querySelector("header").style.display = "unset";
+        document.querySelector("header").style.display = "inline";
         container.style.display = "grid"
     })
     document.querySelector("header").style.display = "none";
 }
+
+let btn = document.getElementById("generate");
+btn.addEventListener("click", ()=>{
+  document.getElementById("password").value=Math.random().toString(36).slice(-10);
+});
 
 const copy = document.querySelectorAll(".copy");
 copy.forEach(c => {

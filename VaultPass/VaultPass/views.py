@@ -91,6 +91,20 @@ def home(request):
             Password.objects.get(id=deletePwd).delete()
             messages.success(request, msg)
             return HttpResponseRedirect(request.path)
+        
+        elif "update_profile" in request.POST:
+            firstName = request.POST.get("first")
+            secondName = request.POST.get("second")
+            password = request.POST.get("password")
+            user = User.objects.get(username = request.user.username)
+            user.first_name = firstName
+            user.second_name = secondName
+            if password:
+                user.set_password(password)
+            user.save()
+            msg = "Profile updated successfully"
+            messages.success(request, msg)
+            return HttpResponseRedirect(request.path)
     
     if request.user.is_anonymous:
         return render(request, 'VaultPass/index.html')
