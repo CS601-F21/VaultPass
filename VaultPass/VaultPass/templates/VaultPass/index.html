@@ -96,9 +96,9 @@
                 {% csrf_token %}
                 <h2>Your profile</h2><br><br>
                 First name<br>
-                <input type="text" name="first" placeholder="{{request.user.first_name}}"><br><br>
+                <input type="text" name="first" value="{{request.user.first_name}}"><br><br>
                 Second name<br>
-                <input type="second" name="second" placeholder="{{request.user.first_name}}"><br><br>
+                <input type="text" name="last" value="{{request.user.last_name}}"><br><br>
                 Email<br>
                 <input type="email" name="email" value="{{request.user.email}}" readonly><br><br>
                 Master password<br>
@@ -112,6 +112,7 @@
         {% for pwd in passwords %}
         <div class="card">
             <form action="." role="form" method="POST">
+                {% csrf_token %}
             {% if pwd.siteLogo %}
             <p style="text-align:center;"><img width="50" style="text-align: center;" height="50" src="{{pwd.siteLogo}}"><p><br>
             {% else %}
@@ -121,7 +122,8 @@
             <input type="email" name="email" value="{{pwd.email}}"> <i class="fa-regular fa-copy copy" title="Copy email"></i><br><br>
             <input type="password" name="password" value="{{pwd.password}}"> <i class="fa-regular fa-copy copy" title="Copy password"></i><br><br>   
             <input type="text" name="hint" value="{{pwd.hint}}"> <i class="fa-regular fa-lightbulb"></i><br><br>
-            <input class="button" type="submit" value="Update" name="update"><br><br>
+            <input type="text" hidden="true" name="password-id" value="{{pwd.id}}">
+            <input class="button" type="submit" value="Update" name="update_password"><br><br>
         </form>
         <form action="." method="POST">
             {% csrf_token %}

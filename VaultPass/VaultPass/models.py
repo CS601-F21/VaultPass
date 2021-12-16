@@ -6,7 +6,7 @@ class Password(models.Model):
     siteTitle = models.CharField(max_length=50)
     pwd = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
-    hint = models.CharField(max_length=50)
+    hint = models.CharField(max_length=50, default="", null=True)
     siteLogo = models.CharField(max_length=100, null=True)
     
     def __str__(self):

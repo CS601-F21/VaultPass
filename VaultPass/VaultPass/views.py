@@ -53,7 +53,7 @@ def home(request):
                 return HttpResponseRedirect(request.path)
             else:
                 login(request, newLogin)
-                msg = "Welcome {}".format(username)
+                msg = "Login successful".format(username)
                 messages.success(request, msg)
                 return HttpResponseRedirect(request.path)
         
@@ -62,9 +62,13 @@ def home(request):
             email = request.POST.get("email")
             pwd= request.POST.get("password")
             hint= request.POST.get("hint")
-            emailEncrypt = fernet.encrypt(email.encode())
-            pwdEncrypt = fernet.encrypt(pwd.encode())
-            
+            try:
+                emailEncrypt = encryptText(email)
+                pwdEncrypt = encryptText(pwd)
+            except:
+                msg = "Adding password unsuccessful"
+                messages.error(request, msg)
+                return HttpResponseRedirect(request.path)
             browser.open(url)
             siteTitle = parseTitle(browser.title())
             try:
@@ -77,8 +81,8 @@ def home(request):
                 siteIcon = None
             newPwd = Password.objects.create(
                 user = request.user,
-                email = emailEncrypt.decode(),
-                pwd = pwdEncrypt.decode(),
+                email = emailEncrypt,
+                pwd = pwdEncrypt,
                 hint=hint,
                 siteTitle = siteTitle,    
                 siteLogo = siteIcon
@@ -88,23 +92,51 @@ def home(request):
             return HttpResponseRedirect(request.path)
         
         elif "delete" in request.POST:
-            deletePwd = request.POST.get("password-id")
+            pwdId = request.POST.get("password-id")
             msg = "Password deleted"
-            Password.objects.get(id=deletePwd).delete()
+            Password.objects.get(id=pwdId).delete()
             messages.success(request, msg)
             return HttpResponseRedirect(request.path)
         
         elif "update_profile" in request.POST:
             firstName = request.POST.get("first")
-            secondName = request.POST.get("second")
+            secondName = request.POST.get("last")
             password = request.POST.get("password")
             user = User.objects.get(username = request.user.username)
             user.first_name = firstName
-            user.second_name = secondName
+            user.last_name = secondName
+            flag = False
             if password:
                 user.set_password(password)
+                flag = True
             user.save()
-            msg = "Profile updated successfully"
+            if not flag:
+                msg = "Profile updated successfully"
+            else:
+                msg = "Profile updated successfully. Login to continue!"
+                logout(request)
+            messages.success(request, msg)
+            
+            return HttpResponseRedirect(request.path)
+        
+        elif "update_password" in request.POST:
+            email = request.POST.get("email")
+            password = request.POST.get("password")
+            hint = request.POST.get("hint")
+            pwdId = request.POST.get("password-id")
+            try:
+                emailEncrypt = encryptText(email)
+                pwdEncrypt = encryptText(password)
+            except:
+                msg = "Password updation unsuccessful"
+                messages.error(request, msg)
+                return HttpResponseRedirect(request.path)
+            pwdObj = Password.objects.get(id=pwdId)
+            pwdObj.email = emailEncrypt
+            pwdObj.pwd = pwdEncrypt
+            pwdObj.hint = hint
+            pwdObj.save()
+            msg = "Password updated successfully"
             messages.success(request, msg)
             return HttpResponseRedirect(request.path)
     
@@ -113,9 +145,8 @@ def home(request):
     
     pwds = Password.objects.all().filter(user=request.user)
     for pwd in pwds:
-        pwd.email = fernet.decrypt(pwd.email.encode()).decode()
-        pwd.password = fernet.decrypt(pwd.pwd.encode()).decode()
-            
+        pwd.email = decryptText(pwd.email)
+        pwd.password = decryptText(pwd.pwd)
     return render(request, 'VaultPass/index.html', {
         "passwords":pwds,
     })
@@ -123,3 +154,15 @@ def home(request):
 
 def parseTitle(title):
     return title.split(':')[0]
+
+def encryptText(text):
+    try:
+        return fernet.encrypt(text.encode()).decode()
+    except Exception as e:
+        raise e
+
+def decryptText(text):
+    try:
+        return fernet.decrypt(text.encode()).decode()
+    except Exception as e:
+        raise e
