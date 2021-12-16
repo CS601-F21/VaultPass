@@ -30,7 +30,7 @@ header{
 }
 
 .branding{
-    font-size:xx-large;
+    font-size:400%;
 }
 
 header nav{
@@ -92,6 +92,9 @@ header li:hover{
     font-size: medium;
 }
 
+.msgs{
+    margin: 20px;
+}
 
 .wrapper{
     width: 100%;
@@ -145,8 +148,8 @@ header li:hover{
 #close{
     position: absolute;
     cursor: pointer; 
-    top: 5%;
-    right: 5%;
+    top: 20%;
+    right: 20%;
 }
 
 #add-password{
