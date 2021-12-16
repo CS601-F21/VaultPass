@@ -84,6 +84,7 @@
                 <input type="text" name="url" placeholder="URL"><br><br>
                 <input type="email" name="email" placeholder="Email"><br><br>
                 <input type="text" id="password" name="password" value="{{generated_pwd}}" placeholder="Password"><br><br>
+                <input type="text" name="hint" placeholder="Password hint"><br><br>
                 <a class="button" id="generate" >Generate</a><br><br>
                 <input class="button" type="submit" value="Save" name="add-password">
             </form>
@@ -119,6 +120,7 @@
             <div class="name"><b>{{pwd.siteTitle}}</b></div><br>
             <input type="email" name="email" value="{{pwd.email}}"> <i class="fa-regular fa-copy copy" title="Copy email"></i><br><br>
             <input type="password" name="password" value="{{pwd.password}}"> <i class="fa-regular fa-copy copy" title="Copy password"></i><br><br>   
+            <input type="text" name="hint" value="{{pwd.hint}}"> <i class="fa-regular fa-lightbulb"></i><br><br>
             <input class="button" type="submit" value="Update" name="update"><br><br>
         </form>
         <form action="." method="POST">

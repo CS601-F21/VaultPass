@@ -61,6 +61,7 @@ def home(request):
             url = request.POST.get("url")
             email = request.POST.get("email")
             pwd= request.POST.get("password")
+            hint= request.POST.get("hint")
             emailEncrypt = fernet.encrypt(email.encode())
             pwdEncrypt = fernet.encrypt(pwd.encode())
             
@@ -78,6 +79,7 @@ def home(request):
                 user = request.user,
                 email = emailEncrypt.decode(),
                 pwd = pwdEncrypt.decode(),
+                hint=hint,
                 siteTitle = siteTitle,    
                 siteLogo = siteIcon
             )
