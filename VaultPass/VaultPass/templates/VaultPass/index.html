@@ -83,13 +83,13 @@
 
         <!--add password-->
         <div class="model" id="add-password">
-            <form action="">
+            <form action="." role="form" method="POST">
+                {% csrf_token %}
                 <h2>Add new password</h2><br><br>
                 <input type="text" name="url" placeholder="URL"><br><br>
-                <input type="text" name="username" placeholder="Username"><br><br>
                 <input type="email" name="email" placeholder="Email"><br><br>
                 <input type="text" name="password" placeholder="Password"><br><br>
-                <input type="submit" value="Save">
+                <input type="submit" value="Save" name="add-password">
             </form>
         </div>
     </div>

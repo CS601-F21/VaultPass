@@ -1,9 +1,19 @@
+from django.contrib.admin.sites import site
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.conf import settings
+from cryptography.fernet import Fernet
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from mechanize import Browser
+from .models import Password
+import favicon
+
+
+fernet = Fernet(settings.FERNET_KEY)
+browser = Browser()
+browser.set_handle_robots(False)
 
 
 
@@ -29,11 +39,13 @@ def home(request):
                     msg = "Login successful"
                     messages.success(request, msg)
                     return HttpResponseRedirect(request.path)
+                
         elif "logout" in request.POST:
             logout(request)
             msg = "Logged out"
             messages.success(request, msg)
             return HttpResponseRedirect(request.path)
+        
         elif "login" in request.POST:
             username = request.POST.get("username")
             password = request.POST.get("password")
@@ -47,6 +59,27 @@ def home(request):
                 msg = "Welcome {}".format(username)
                 messages.success(request, msg)
                 return HttpResponseRedirect(request.path)
+        
+        elif "add-password" in request.POST:
+            url = request.POST.get("url")
+            email = request.POST.get("email")
+            pwd= request.POST.get("password")
+            emailEncrypt = fernet.encrypt(email.encode())
+            pwdEncrypt = fernet.encrypt(pwd.encode())
+            browser.open(url)
+            siteTitle = browser.title()
+            siteIcon = favicon.get(url)[1].url
+            newPwd = Password.objects.create(
+                user = request.user,
+                email = emailEncrypt.decode(),
+                pwd = pwdEncrypt.decode(),
+                siteTitle = siteTitle,    
+                siteLogo = siteIcon
+            )
+            msg = "Password saved"
+            messages.success(request, msg)
+            return HttpResponseRedirect(request.path)
+            
             
 
                 
