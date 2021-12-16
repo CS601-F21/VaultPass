@@ -1,8 +1,9 @@
-# VaultPass
+# <img src="/VaultPass/VaultPass/static/vault.png" width="50" height="50">  VaultPass
 
+
+ 
 VaultPass is a local password manager.
 
-<br/>
 
 ## Instructions
 
@@ -20,7 +21,6 @@ VaultPass is a local password manager.
 
 Default Port is 8000
 
-<br/>
 
 ## About
 
