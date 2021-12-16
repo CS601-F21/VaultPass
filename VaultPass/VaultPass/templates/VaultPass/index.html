@@ -28,6 +28,9 @@
                     </form>
                 {% endif %}
             </ul>
+            {% if not request.user.is_anonymous %}
+            <p>{{request.user.email}}</p>
+            {% endif %}
         </nav>
     </header>
 
@@ -55,7 +58,6 @@
                 <h2>Login</h2><br><br>
                 <input type="text" name="username" placeholder=" Username"><br><br>
                 <input type="text" name="password" placeholder=" Password"><br><br>
-                
                 <input class="button" type="submit" value="Login" name="login">
             </form>
         </div>
@@ -95,31 +97,18 @@
     </div>
 
         <div class="container">
+            {% for pwd in passwords %}
             <div class="card">
-                <div class="name">
-                    Google
-                </div>   
+                {% if pwd.siteLogo %}
+                <p style="text-align:center;"><img width="50" style="text-align: center;" height="50" src="{{pwd.siteLogo}}"><p><br>
+                {% else %}
+                <p style="text-align:center;"><img width="50" style="text-align: center;" height="50" src="static/missing.png"><p><br>
+                {% endif %}
+                <div class="name">{{pwd.siteTitle}}</div><br>
+                <input type="email" name="email" value="{{pwd.email}}"> <i class="fa-regular fa-copy copy" title="Copy email"></i><br><br>
+                <input type="password" name="password" value="{{pwd.password}}"> <i class="fa-regular fa-copy copy" title="Copy password"></i><br><br>   
             </div>
-            <div class="card">
-                <div class="name">
-                    Google
-                </div>   
-            </div>
-            <div class="card">
-                <div class="name">
-                    Google
-                </div>   
-            </div>
-            <div class="card">
-                <div class="name">
-                    Google
-                </div>   
-            </div>
-            <div class="card">
-                <div class="name">
-                    Google
-                </div>   
-            </div>
+            {% endfor %}
         </div>
 </body>
 </html>

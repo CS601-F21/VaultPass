@@ -6,10 +6,10 @@ class Password(models.Model):
     siteTitle = models.CharField(max_length=100)
     pwd = models.CharField(max_length=100)
     email = models.CharField(max_length=100)
-    siteLogo = models.CharField(max_length=100)
+    siteLogo = models.CharField(max_length=100, null=True)
     
     def __str__(self):
-        return self.name
+        return self.siteTitle
 
-    class Metadata:
+    class Meta:
         ordering = ["-id"]    

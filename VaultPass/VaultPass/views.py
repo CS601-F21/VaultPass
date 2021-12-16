@@ -10,7 +10,6 @@ from mechanize import Browser
 from .models import Password
 import favicon
 
-
 fernet = Fernet(settings.FERNET_KEY)
 browser = Browser()
 browser.set_handle_robots(False)
@@ -66,9 +65,13 @@ def home(request):
             pwd= request.POST.get("password")
             emailEncrypt = fernet.encrypt(email.encode())
             pwdEncrypt = fernet.encrypt(pwd.encode())
+            
             browser.open(url)
             siteTitle = browser.title()
-            siteIcon = favicon.get(url)[1].url
+            try:
+                siteIcon = favicon.get(url)[1].url
+            except:
+                siteIcon = None
             newPwd = Password.objects.create(
                 user = request.user,
                 email = emailEncrypt.decode(),
@@ -79,8 +82,17 @@ def home(request):
             msg = "Password saved"
             messages.success(request, msg)
             return HttpResponseRedirect(request.path)
-            
-            
+    
+    if request.user.is_anonymous:
+        return render(request, 'VaultPass/index.html')
 
-                
-    return render(request, 'VaultPass/index.html', {})
+    pwds = Password.objects.all().filter(user=request.user)
+    for pwd in pwds:
+        pwd.email = fernet.decrypt(pwd.email.encode()).decode()
+        pwd.password = fernet.decrypt(pwd.pwd.encode()).decode()
+            
+    return render(request, 'VaultPass/index.html', {
+        "passwords":pwds,
+    })
+    
+    # return render(request, 'VaultPass/index.html')
